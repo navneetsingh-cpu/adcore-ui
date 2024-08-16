@@ -62,6 +62,25 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+
+    this.getCourses();
+    this.coursesService.listenForRefresh().subscribe(() => {
+      this.getCourses();
+    })
+
+
+
+  }
+
+  deleteCourse(element) {
+    console.log(element);
+
+    this.coursesService.deleteCourse(element.id).subscribe(() => {
+      this.getCourses();
+    });
+  }
+
+  getCourses() {
     this.coursesService.getCourses().subscribe((courses: any) => {
       // process the configuration.
       console.log('data', courses);
@@ -70,7 +89,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       const updatedCourses = courses.map((course: any) => ({
         ...course,
         Location: `${course.City}, ${course.Country}, ${course.University}`,
-        Start: course.StartDate,
+        Start: new Date(course.StartDate).toLocaleDateString(),
         Length: this.getDifferenceinDays(course.StartDate, course.EndDate),
         Price: '' + getSymbolFromCurrency(course.Currency) + Math.round(course.Price).toLocaleString()
       }));

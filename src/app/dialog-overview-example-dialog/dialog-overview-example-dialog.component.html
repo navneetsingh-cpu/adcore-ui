@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>Add Course</h2>
 <mat-dialog-content>
-  <form class="example-form">
+  <form class="example-form" [formGroup]="myForm">
     <div>
       <mat-form-field>
         <mat-label>Course Name</mat-label>
-        <input matInput />
+        <input matInput formControlName="CourseName" />
       </mat-form-field>
     </div>
     <div>
@@ -15,6 +15,7 @@
           placeholder="Pick one"
           aria-label="Number"
           matInput
+          formControlName="University"
           [matAutocomplete]="auto"
         />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -32,6 +33,7 @@
           placeholder="Pick one"
           aria-label="Number"
           matInput
+          formControlName="Country"
           [matAutocomplete]="auto1"
         />
         <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
@@ -49,6 +51,7 @@
           placeholder="Pick one"
           aria-label="Number"
           matInput
+          formControlName="City"
           [matAutocomplete]="auto2"
         />
         <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
@@ -61,8 +64,23 @@
 
     <div>
       <mat-form-field>
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="Currency">
+          @for (currency of currencies; track currency) {
+          <mat-option [value]="currency">{{ currency }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="margin-left: 10px">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="Price" type="number" />
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="picker" />
+        <input matInput [matDatepicker]="picker" formControlName="StartDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
@@ -74,25 +92,25 @@
     <div>
       <mat-form-field>
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="picker1" />
+        <input matInput [matDatepicker]="picker1" formControlName="EndDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
           [for]="picker1"
         ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field class="example-full-width">
         <mat-label>Course Description</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput formControlName="CourseDescription"></textarea>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial>Save</button>
+  <button mat-button cdkFocusInitial [disabled]="!myForm.valid" (click)="saveCourse()">Save</button>
 </mat-dialog-actions>
