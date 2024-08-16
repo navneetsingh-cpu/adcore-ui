@@ -1,1 +1,1 @@
-/api https://adcore-backend-4.onrender.com/
+/api/*  https://adcore-backend-4.onrender.com/:splat  200
