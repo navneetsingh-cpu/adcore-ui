@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/api"
-  to = "https://adcore-backend-4.onrender.com/"
+  from = "/api/courses"
+  to = "https://adcore-backend-4.onrender.com/courses"
   status = 200
   force = true
