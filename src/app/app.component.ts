@@ -80,6 +80,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
+  editCourse(element) {
+    console.log(element);
+
+    this.coursesService.editData = element;
+    this.dialog.open(DialogOverviewExampleDialogComponent);
+
+
+  }
+
   getCourses() {
     this.coursesService.getCourses().subscribe((courses: any) => {
       // process the configuration.

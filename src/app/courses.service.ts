@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class CoursesService {
   courseData = [];
   refresh: Subject<any> = new Subject();
+  editData: any;
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,10 @@ export class CoursesService {
   }
   deleteCourse(id: string): any {
     return this.http.delete<any>(`api/courses/${id}`)
+  }
+
+  editCourse(id: string, object: any): any {
+    return this.http.put<any>(`api/courses/${id}`, object);
   }
   saveCourse(obj: any): any {
     return this.http.post<any>('api/courses/', obj)
