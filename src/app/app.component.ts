@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CoursesService } from './courses.service';
 import getSymbolFromCurrency from 'currency-symbol-map'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatTableModule],
+  imports: [RouterOutlet, MatTableModule, MatPaginatorModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'adcore-ui';
 
-  dataSource = [];
+  dataSource: any;
 
   displayedColumns: string[] = ['CourseName', 'Location', 'Start', 'Length', 'Price'];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private coursesService: CoursesService) {
 
@@ -52,7 +55,13 @@ export class AppComponent {
         Price: '' + getSymbolFromCurrency(course.Currency) + Math.round(course.Price)
       }));
 
-      this.dataSource = updatedCourses;
+      this.dataSource = new MatTableDataSource(updatedCourses);
+      this.dataSource.paginator = this.paginator
+
+
     });
+  }
+
+  ngAfterViewInit() {
   }
 }
