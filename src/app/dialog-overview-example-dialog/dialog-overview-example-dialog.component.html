@@ -10,35 +10,55 @@
     <div>
       <mat-form-field>
         <mat-label>University</mat-label>
-        <input matInput />
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          @for (option of universities; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field>
         <mat-label>Country</mat-label>
-        <input matInput />
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [matAutocomplete]="auto1"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+          @for (option of countries; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field>
         <mat-label>City</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Favorite food</mat-label>
-        <mat-select>
-          @for (food of foods; track food) {
-          <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [matAutocomplete]="auto2"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+          @for (option of cities; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
           }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field style="margin-left: 10px">
-        <mat-label>Price</mat-label>
-        <input matInput />
+        </mat-autocomplete>
       </mat-form-field>
     </div>
+
     <div>
       <mat-form-field>
         <mat-label>Start Date</mat-label>
@@ -54,11 +74,11 @@
     <div>
       <mat-form-field>
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="picker" />
+        <input matInput [matDatepicker]="picker1" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
-          [for]="picker"
+          [for]="picker1"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>

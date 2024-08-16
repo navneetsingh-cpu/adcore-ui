@@ -7,6 +7,8 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, Mat
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { CoursesService } from '../courses.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-dialog-overview-example-dialog',
@@ -20,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogActions,
     MatSelectModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
     MatDialogClose],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dialog-overview-example-dialog.component.html',
@@ -34,11 +37,25 @@ export class DialogOverviewExampleDialogComponent {
     { value: 'pizza-1', viewValue: 'Pizza' },
     { value: 'tacos-2', viewValue: 'Tacos' },
   ];
+  universities = [];
+  countries = [];
+  cities = [];
+  picker1: any;
 
+  constructor(private coursesService: CoursesService) {
 
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  ngOnInit() {
+
+    this.universities = [...new Set(this.coursesService.courseData.map(item => item.University))];
+    this.countries = [...new Set(this.coursesService.courseData.map(item => item.Country))];
+    this.cities = [...new Set(this.coursesService.courseData.map(item => item.City))];
+
   }
 
 }

@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CoursesService {
+  courseData = [];
+
 
   constructor(private http: HttpClient) { }
 

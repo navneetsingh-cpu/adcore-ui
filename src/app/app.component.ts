@@ -65,6 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.coursesService.getCourses().subscribe((courses: any) => {
       // process the configuration.
       console.log('data', courses);
+      this.coursesService.courseData = [...courses];
 
       const updatedCourses = courses.map((course: any) => ({
         ...course,
