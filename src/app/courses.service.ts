@@ -21,16 +21,16 @@ export class CoursesService {
   }
 
   getCourses(): any {
-    return this.http.get<any>('https://adcore-backend-4.onrender.com/courses/')
+    return this.http.get<any>('api/courses/')
   }
   deleteCourse(id: string): any {
-    return this.http.delete<any>(`https://adcore-backend-4.onrender.com/courses/${id}`)
+    return this.http.delete<any>(`api/courses/${id}`)
   }
 
   editCourse(id: string, object: any): any {
-    return this.http.put<any>(`https://adcore-backend-4.onrender.com/courses/${id}`, object);
+    return this.http.put<any>(`api/courses/${id}`, object);
   }
   saveCourse(obj: any): any {
-    return this.http.post<any>('https://adcore-backend-4.onrender.com/courses/', obj)
+    return this.http.post<any>('api/courses/', obj)
   }
 }
