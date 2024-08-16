@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { CoursesService } from './courses.service';
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 @Component({
   selector: 'app-root',
@@ -13,29 +14,45 @@ import { CoursesService } from './courses.service';
 export class AppComponent {
   title = 'adcore-ui';
 
-  dataSource = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  ];
+  dataSource = [];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['CourseName', 'Location', 'Start', 'Length', 'Price'];
 
   constructor(private coursesService: CoursesService) {
 
   }
 
+
+  getDifferenceinDays(startDate: string, endDate: string) {
+    const start: Date = new Date(startDate);
+    const end: Date = new Date(endDate);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = end.getTime() - start.getTime();
+
+    // Convert milliseconds to days
+    const millisecondsInOneDay: number = 1000 * 60 * 60 * 24;
+    const differenceInDays: number = Math.floor(differenceInMilliseconds / millisecondsInOneDay);
+
+    return differenceInDays
+  }
+
+
+
   ngOnInit() {
-    this.coursesService.getCourses().subscribe((config: any) => {
+    this.coursesService.getCourses().subscribe((courses: any) => {
       // process the configuration.
-      console.log('data', config)
+      console.log('data', courses);
+
+      const updatedCourses = courses.map((course: any) => ({
+        ...course,
+        Location: `${course.City}, ${course.Country}, ${course.University}`,
+        Start: course.StartDate,
+        Length: this.getDifferenceinDays(course.StartDate, course.EndDate),
+        Price: '' + getSymbolFromCurrency(course.Currency) + Math.round(course.Price)
+      }));
+
+      this.dataSource = updatedCourses;
     });
   }
 }

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://adcore-backend-3.onrender.com/",
+    "target": "https://adcore-backend-4.onrender.com/",
     "secure": true,
     "pathRewrite": {
       "^/api": ""
