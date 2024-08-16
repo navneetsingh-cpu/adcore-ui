@@ -7,11 +7,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatTooltipModule],
+  imports: [RouterOutlet, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatTooltipModule, MatButtonModule, MatIconModule, MatSortModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,6 +26,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['CourseName', 'Location', 'Start', 'Length', 'Price'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private coursesService: CoursesService) {
 
@@ -63,7 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.dataSource = new MatTableDataSource(updatedCourses);
       this.dataSource.paginator = this.paginator
-
+      this.dataSource.sort = this.sort
 
     });
   }
